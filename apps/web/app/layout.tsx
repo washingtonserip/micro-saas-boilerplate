@@ -8,6 +8,7 @@ import { ActiveThemeProvider } from "@repo/ui/components/active-theme";
 import { TailwindIndicator } from "@repo/ui/components/tailwind-indicator";
 import { ThemeProvider } from "@repo/ui/components/theme-provider";
 import { Toaster } from "@repo/ui/components/ui/sonner";
+import { SiteBanner } from "@/components/site-banner";
 
 import "@repo/ui/styles/globals.css";
 
@@ -60,6 +61,7 @@ export default function RootLayout({
         <TRPCProvider>
           <ThemeProvider>
             <ActiveThemeProvider initialTheme="blue">
+              <SiteBanner />
               {children}
               <TailwindIndicator />
               <Toaster position="top-center" />

@@ -54,30 +54,6 @@ export default function Home() {
                 <span className="relative z-10">tRPC Demo</span>
               </Link>
             </div>
-
-            {/* Footer */}
-            <div className="pt-8 space-y-3">
-              <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                <span>Created by</span>
-                <a
-                  href="https://github.com/washingtonserip"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-medium hover:text-foreground transition-colors inline-flex items-center gap-1"
-                >
-                  washingtonserip
-                </a>
-              </div>
-              <a
-                href="https://github.com/washingtonserip/micro-saas-boilerplate"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors group"
-              >
-                <Github className="w-4 h-4 group-hover:rotate-12 transition-transform" />
-                View on GitHub
-              </a>
-            </div>
           </div>
         </div>
       </div>
