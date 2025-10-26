@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { META_THEME_COLORS, siteConfig } from "@/lib/config";
 import { fontVariables } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
+import { TRPCProvider } from "@/lib/trpc/react";
 import { ActiveThemeProvider } from "@repo/ui/components/active-theme";
 import { TailwindIndicator } from "@repo/ui/components/tailwind-indicator";
 import { ThemeProvider } from "@repo/ui/components/theme-provider";
@@ -56,13 +57,15 @@ export default function RootLayout({
           fontVariables
         )}
       >
-        <ThemeProvider>
-          <ActiveThemeProvider initialTheme="blue">
-            {children}
-            <TailwindIndicator />
-            <Toaster position="top-center" />
-          </ActiveThemeProvider>
-        </ThemeProvider>
+        <TRPCProvider>
+          <ThemeProvider>
+            <ActiveThemeProvider initialTheme="blue">
+              {children}
+              <TailwindIndicator />
+              <Toaster position="top-center" />
+            </ActiveThemeProvider>
+          </ThemeProvider>
+        </TRPCProvider>
       </body>
     </html>
   );

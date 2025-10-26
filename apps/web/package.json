@@ -11,7 +11,12 @@
     "check-types": "next typegen && tsc --noEmit"
   },
   "dependencies": {
+    "@repo/api": "workspace:*",
     "@repo/ui": "workspace:*",
+    "@tanstack/react-query": "^5.62.15",
+    "@trpc/client": "^11.0.0-rc.663",
+    "@trpc/react-query": "^11.0.0-rc.663",
+    "@trpc/server": "^11.0.0-rc.663",
     "clsx": "^2.1.1",
     "lucide-react": "^0.548.0",
     "next": "^16.0.0",
