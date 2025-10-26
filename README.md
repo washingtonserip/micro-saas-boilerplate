@@ -2,6 +2,8 @@
 
 A modern, production-ready Micro SaaS starter built with Next.js, tRPC, and Drizzle ORM. Get your SaaS up and running in minutes with a fully-configured monorepo architecture.
 
+![Micro SaaS Boilerplate](./cover.png)
+
 ## Features
 
 - **Modern Stack** - Next.js 16, React 19, TypeScript, TailwindCSS v4
@@ -14,17 +16,17 @@ A modern, production-ready Micro SaaS starter built with Next.js, tRPC, and Driz
 
 ## Tech Stack
 
-| Category | Technology |
-|----------|-----------|
-| Framework | Next.js 16 (App Router) |
-| Language | TypeScript 5.9 |
-| Styling | TailwindCSS v4 |
-| UI Components | shadcn/ui + Radix UI |
-| API Layer | tRPC v11 |
-| Database | PostgreSQL (Drizzle ORM) |
-| Monorepo | Turborepo |
-| Package Manager | pnpm |
-| Containerization | Docker Compose |
+| Category         | Technology               |
+| ---------------- | ------------------------ |
+| Framework        | Next.js 16 (App Router)  |
+| Language         | TypeScript 5.9           |
+| Styling          | TailwindCSS v4           |
+| UI Components    | shadcn/ui + Radix UI     |
+| API Layer        | tRPC v11                 |
+| Database         | PostgreSQL (Drizzle ORM) |
+| Monorepo         | Turborepo                |
+| Package Manager  | pnpm                     |
+| Containerization | Docker Compose           |
 
 ## Project Structure
 
@@ -55,30 +57,36 @@ micro-saas-boilerplate/
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/washingtonserip/micro-saas-boilerplate.git
    cd micro-saas-boilerplate
    ```
 
 2. **Install dependencies**
+
    ```bash
    pnpm install
    ```
 
 3. **Set up environment variables**
+
    ```bash
    cp .env.example .env
    ```
 
 4. **Start the database** (optional - uses Docker)
+
    ```bash
    docker compose up -d
    ```
+
    This starts:
    - PostgreSQL on `localhost:5432`
    - pgAdmin on `localhost:5050` (admin@admin.com / admin)
 
 5. **Run database migrations**
+
    ```bash
    # First, copy .env to apps/web/.env.local for Next.js
    cp .env apps/web/.env.local
@@ -97,6 +105,7 @@ The app will be running at [http://localhost:3000](http://localhost:3000)
 ## Available Scripts
 
 ### Root Scripts
+
 - `pnpm dev` - Start all apps in development mode
 - `pnpm build` - Build all apps and packages
 - `pnpm lint` - Lint all packages
@@ -104,12 +113,14 @@ The app will be running at [http://localhost:3000](http://localhost:3000)
 - `pnpm check-types` - Run TypeScript type checking
 
 ### Database Scripts
+
 - `pnpm --filter @repo/db db:generate` - Generate migrations from schema changes
 - `pnpm --filter @repo/db db:migrate` - Run pending migrations (production workflow)
 - `pnpm --filter @repo/db db:push` - Push schema directly (dev only, skip for production)
 - `pnpm --filter @repo/db db:studio` - Open Drizzle Studio GUI
 
 ### Web App Scripts
+
 - `pnpm --filter web dev` - Start Next.js dev server
 - `pnpm --filter web build` - Build for production
 - `pnpm --filter web start` - Start production server
@@ -126,27 +137,33 @@ This boilerplate includes example pages to help you get started:
 ## Package Details
 
 ### `@repo/api`
+
 tRPC router and procedures with full type safety. Located in `packages/api/`.
 
 **Key Features:**
+
 - Type-safe API routes
 - React Query integration
 - Zod validation
 - Database integration via Drizzle
 
 ### `@repo/db`
+
 Database layer using Drizzle ORM with PostgreSQL.
 
 **Key Features:**
+
 - Type-safe database queries
 - Schema migrations
 - Drizzle Studio support
 - Connection pooling
 
 ### `@repo/ui`
+
 Shared component library based on shadcn/ui.
 
 **Included Components:**
+
 - Accordion, Alert Dialog, Avatar
 - Button, Card, Checkbox, Dialog
 - Dropdown Menu, Form, Input
@@ -169,13 +186,17 @@ For production, use a secure connection string with SSL.
 ## Database Management
 
 ### Using Drizzle Studio
+
 ```bash
 pnpm --filter @repo/db db:studio
 ```
+
 Opens a web interface at `localhost:4983` for managing your database.
 
 ### Using pgAdmin
+
 If using Docker Compose, pgAdmin is available at `localhost:5050`:
+
 - Email: `admin@admin.com`
 - Password: `admin`
 
@@ -213,6 +234,7 @@ import { Button } from "@repo/ui/button";
 This boilerplate is optimized for Vercel deployment with automatic database migrations.
 
 **Prerequisites:**
+
 - A PostgreSQL database (Vercel Postgres, Neon, Supabase, etc.)
 
 **Steps:**
@@ -223,6 +245,7 @@ This boilerplate is optimized for Vercel deployment with automatic database migr
    - Option 3: [Supabase](https://supabase.com/database)
 
 2. **Push your code to GitHub**
+
    ```bash
    git push origin main
    ```
@@ -247,6 +270,7 @@ This boilerplate is optimized for Vercel deployment with automatic database migr
    ```
 
    Example for Neon:
+
    ```env
    DATABASE_URL=postgresql://user:password@host.neon.tech/dbname?sslmode=require
    ```
@@ -286,6 +310,7 @@ docker run -p 3000:3000 micro-saas-boilerplate
 ### Styling
 
 TailwindCSS v4 is configured in `packages/ui/`. Customize your theme in:
+
 - `packages/ui/src/styles/` - Global styles
 - `packages/ui/tailwind.config.js` - Tailwind configuration
 
@@ -295,13 +320,13 @@ Add or modify schemas in `packages/db/src/schema/`:
 
 ```typescript
 // packages/db/src/schema/users.ts
-import { pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
+import { pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
 
-export const users = pgTable('users', {
-  id: serial('id').primaryKey(),
-  email: text('email').notNull().unique(),
-  name: text('name'),
-  createdAt: timestamp('created_at').defaultNow(),
+export const users = pgTable("users", {
+  id: serial("id").primaryKey(),
+  email: text("email").notNull().unique(),
+  name: text("name"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 ```
 
