@@ -2,11 +2,11 @@
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { httpBatchLink } from '@trpc/client';
-import { createTRPCReact } from '@trpc/react-query';
+import { createTRPCReact, type CreateTRPCReact } from '@trpc/react-query';
 import { useState } from 'react';
 import type { AppRouter } from '@repo/api';
 
-export const trpc = createTRPCReact<AppRouter>();
+export const trpc: CreateTRPCReact<AppRouter, unknown> = createTRPCReact<AppRouter>();
 
 function getBaseUrl() {
   if (typeof window !== 'undefined') {
