@@ -11,7 +11,8 @@
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
-    "db:drop": "drizzle-kit drop"
+    "db:drop": "drizzle-kit drop",
+    "postinstall": "[ -n \"$DATABASE_URL\" ] && drizzle-kit migrate || echo 'DATABASE_URL not set, skipping migrations (local development)'"
   },
   "dependencies": {
     "drizzle-orm": "^0.38.3",

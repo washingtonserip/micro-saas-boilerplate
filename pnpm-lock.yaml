@@ -27,6 +27,9 @@ importers:
       '@repo/api':
         specifier: workspace:*
         version: link:../../packages/api
+      '@repo/db':
+        specifier: workspace:*
+        version: link:../../packages/db
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui

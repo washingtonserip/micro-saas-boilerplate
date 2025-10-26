@@ -257,13 +257,13 @@ This boilerplate is optimized for Vercel deployment with automatic database migr
 
 **How Migrations Work on Vercel:**
 
-The `apps/web/package.json` includes a `postinstall` script that automatically runs database migrations:
+The `packages/db/package.json` includes a `postinstall` script that automatically runs database migrations when `DATABASE_URL` is available:
 
 ```json
-"postinstall": "pnpm --filter @repo/db db:migrate"
+"postinstall": "[ -n \"$DATABASE_URL\" ] && drizzle-kit migrate || echo 'DATABASE_URL not set, skipping migrations (local development)'"
 ```
 
-This ensures your database schema is always up-to-date with each deployment.
+This conditionally runs migrations only in production (when `DATABASE_URL` is set), ensuring your database schema is always up-to-date with each deployment while skipping migrations during local development.
 
 **Troubleshooting:**
 
