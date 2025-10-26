@@ -1,135 +1,267 @@
-# Turborepo starter
+# SaaS Boilerplate
 
-This Turborepo starter is maintained by the Turborepo core team.
+A modern, production-ready SaaS starter built with Next.js, tRPC, and Drizzle ORM. Get your SaaS up and running in minutes with a fully-configured monorepo architecture.
 
-## Using this example
+## Features
 
-Run the following command:
+- **Modern Stack** - Next.js 16, React 19, TypeScript, TailwindCSS v4
+- **Type-Safe APIs** - End-to-end type safety with tRPC v11
+- **Database Ready** - Drizzle ORM with PostgreSQL, schema migrations
+- **Beautiful UI** - Full shadcn/ui component library with Radix UI primitives
+- **Monorepo Architecture** - Turborepo for optimal build caching and task running
+- **Docker Support** - Local PostgreSQL + pgAdmin setup included
+- **Developer Experience** - Hot reload, type checking, linting, formatting
 
-```sh
-npx create-turbo@latest
-```
+## Tech Stack
 
-## What's inside?
+| Category | Technology |
+|----------|-----------|
+| Framework | Next.js 16 (App Router) |
+| Language | TypeScript 5.9 |
+| Styling | TailwindCSS v4 |
+| UI Components | shadcn/ui + Radix UI |
+| API Layer | tRPC v11 |
+| Database | PostgreSQL (Drizzle ORM) |
+| Monorepo | Turborepo |
+| Package Manager | pnpm |
+| Containerization | Docker Compose |
 
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
+## Project Structure
 
 ```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+saas-boilerplate/
+├── apps/
+│   └── web/              # Next.js application
+│       ├── app/          # App router pages
+│       └── package.json
+├── packages/
+│   ├── api/              # tRPC API layer
+│   ├── db/               # Drizzle ORM + schemas
+│   ├── ui/               # Shared UI components (shadcn/ui)
+│   ├── eslint-config/    # Shared ESLint configs
+│   └── typescript-config/# Shared TypeScript configs
+├── docker-compose.yml    # PostgreSQL + pgAdmin
+└── package.json          # Root workspace config
 ```
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+## Quick Start
 
+### Prerequisites
+
+- Node.js 18+
+- pnpm 9.0.0+
+- Docker (optional, for database)
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/washingtonserip/saas-boilerplate.git
+   cd saas-boilerplate
+   ```
+
+2. **Install dependencies**
+   ```bash
+   pnpm install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp .env.example .env
+   ```
+
+4. **Start the database** (optional - uses Docker)
+   ```bash
+   docker compose up -d
+   ```
+   This starts:
+   - PostgreSQL on `localhost:5432`
+   - pgAdmin on `localhost:5050` (admin@admin.com / admin)
+
+5. **Push database schema**
+   ```bash
+   pnpm --filter @repo/db db:push
+   ```
+
+6. **Start development server**
+   ```bash
+   pnpm dev
+   ```
+
+The app will be running at [http://localhost:3000](http://localhost:3000)
+
+## Available Scripts
+
+### Root Scripts
+- `pnpm dev` - Start all apps in development mode
+- `pnpm build` - Build all apps and packages
+- `pnpm lint` - Lint all packages
+- `pnpm format` - Format code with Prettier
+- `pnpm check-types` - Run TypeScript type checking
+
+### Database Scripts
+- `pnpm --filter @repo/db db:generate` - Generate migrations
+- `pnpm --filter @repo/db db:push` - Push schema to database
+- `pnpm --filter @repo/db db:studio` - Open Drizzle Studio
+- `pnpm --filter @repo/db db:migrate` - Run migrations
+
+### Web App Scripts
+- `pnpm --filter web dev` - Start Next.js dev server
+- `pnpm --filter web build` - Build for production
+- `pnpm --filter web start` - Start production server
+
+## Example Pages
+
+This boilerplate includes example pages to help you get started:
+
+- **Home** (`/`) - Landing page with navigation
+- **Landing Page** (`/landing-page`) - Full landing page example
+- **Dashboard** (`/dashboard`) - Dashboard layout example
+- **Demo** (`/demo`) - Component showcase
+
+## Package Details
+
+### `@repo/api`
+tRPC router and procedures with full type safety. Located in `packages/api/`.
+
+**Key Features:**
+- Type-safe API routes
+- React Query integration
+- Zod validation
+- Database integration via Drizzle
+
+### `@repo/db`
+Database layer using Drizzle ORM with PostgreSQL.
+
+**Key Features:**
+- Type-safe database queries
+- Schema migrations
+- Drizzle Studio support
+- Connection pooling
+
+### `@repo/ui`
+Shared component library based on shadcn/ui.
+
+**Included Components:**
+- Accordion, Alert Dialog, Avatar
+- Button, Card, Checkbox, Dialog
+- Dropdown Menu, Form, Input
+- Select, Table, Tabs, Toast
+- And 30+ more components
+
+All components are fully customizable and built with Radix UI primitives.
+
+## Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+# Database
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/saas_boilerplate
 ```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+For production, use a secure connection string with SSL.
+
+## Database Management
+
+### Using Drizzle Studio
+```bash
+pnpm --filter @repo/db db:studio
+```
+Opens a web interface at `localhost:4983` for managing your database.
+
+### Using pgAdmin
+If using Docker Compose, pgAdmin is available at `localhost:5050`:
+- Email: `admin@admin.com`
+- Password: `admin`
+
+## Development Workflow
+
+### Adding a New Feature
+
+1. Create database schema in `packages/db/src/schema/`
+2. Push schema changes: `pnpm --filter @repo/db db:push`
+3. Add tRPC procedures in `packages/api/src/routers/`
+4. Create UI components in `packages/ui/src/`
+5. Build pages in `apps/web/app/`
+
+### Creating a New Component
+
+UI components follow the shadcn/ui pattern:
+
+```bash
+# Components are in packages/ui/src/
+# Import them in your app:
+import { Button } from "@repo/ui/button";
 ```
 
-### Develop
+## Deployment
 
-To develop all apps and packages, run the following command:
+### Vercel (Recommended)
 
-```
-cd my-turborepo
+1. Push your code to GitHub
+2. Import your repository in Vercel
+3. Set the root directory to `apps/web`
+4. Add environment variables
+5. Deploy
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
+### Docker
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
+Build and run the production container:
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
+```bash
+pnpm build
+docker build -t saas-boilerplate .
+docker run -p 3000:3000 saas-boilerplate
 ```
 
-### Remote Caching
+## Customization
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+### Styling
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+TailwindCSS v4 is configured in `packages/ui/`. Customize your theme in:
+- `packages/ui/src/styles/` - Global styles
+- `packages/ui/tailwind.config.js` - Tailwind configuration
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+### Database Schema
 
+Add or modify schemas in `packages/db/src/schema/`:
+
+```typescript
+// packages/db/src/schema/users.ts
+import { pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
+
+export const users = pgTable('users', {
+  id: serial('id').primaryKey(),
+  email: text('email').notNull().unique(),
+  name: text('name'),
+  createdAt: timestamp('created_at').defaultNow(),
+});
 ```
-cd my-turborepo
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
+Then run `pnpm --filter @repo/db db:push` to apply changes.
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
+## Contributing
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+## License
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
+MIT License - feel free to use this for your own projects.
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
+## Author
+
+Created by [washingtonserip](https://github.com/washingtonserip)
 
 ## Useful Links
 
-Learn more about the power of Turborepo:
+- [Next.js Documentation](https://nextjs.org/docs)
+- [tRPC Documentation](https://trpc.io)
+- [Drizzle ORM Documentation](https://orm.drizzle.team)
+- [shadcn/ui Documentation](https://ui.shadcn.com)
+- [Turborepo Documentation](https://turborepo.com)
+- [TailwindCSS Documentation](https://tailwindcss.com)
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+## Support
+
+If you find this helpful, please give it a star on [GitHub](https://github.com/washingtonserip/saas-boilerplate)!
