@@ -1,6 +1,6 @@
-# SaaS Boilerplate
+# Micro SaaS Boilerplate
 
-A modern, production-ready SaaS starter built with Next.js, tRPC, and Drizzle ORM. Get your SaaS up and running in minutes with a fully-configured monorepo architecture.
+A modern, production-ready Micro SaaS starter built with Next.js, tRPC, and Drizzle ORM. Get your SaaS up and running in minutes with a fully-configured monorepo architecture.
 
 ## Features
 
@@ -29,7 +29,7 @@ A modern, production-ready SaaS starter built with Next.js, tRPC, and Drizzle OR
 ## Project Structure
 
 ```
-saas-boilerplate/
+micro-saas-boilerplate/
 ├── apps/
 │   └── web/              # Next.js application
 │       ├── app/          # App router pages
@@ -56,8 +56,8 @@ saas-boilerplate/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/washingtonserip/saas-boilerplate.git
-   cd saas-boilerplate
+   git clone https://github.com/washingtonserip/micro-saas-boilerplate.git
+   cd micro-saas-boilerplate
    ```
 
 2. **Install dependencies**
@@ -84,7 +84,7 @@ saas-boilerplate/
    cp .env apps/web/.env.local
 
    # Run migrations
-   DATABASE_URL=postgresql://postgres:postgres@localhost:5432/saas_boilerplate pnpm --filter @repo/db db:migrate
+   DATABASE_URL=postgresql://postgres:postgres@localhost:5432/micro_saas_boilerplate pnpm --filter @repo/db db:migrate
    ```
 
 6. **Start development server**
@@ -161,7 +161,7 @@ Create a `.env` file in the root directory:
 
 ```env
 # Database
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/saas_boilerplate
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/micro_saas_boilerplate
 ```
 
 For production, use a secure connection string with SSL.
@@ -277,8 +277,8 @@ Build and run the production container:
 
 ```bash
 pnpm build
-docker build -t saas-boilerplate .
-docker run -p 3000:3000 saas-boilerplate
+docker build -t micro-saas-boilerplate .
+docker run -p 3000:3000 micro-saas-boilerplate
 ```
 
 ## Customization
@@ -338,4 +338,4 @@ Created by [washingtonserip](https://github.com/washingtonserip)
 
 ## Support
 
-If you find this helpful, please give it a star on [GitHub](https://github.com/washingtonserip/saas-boilerplate)!
+If you find this helpful, please give it a star on [GitHub](https://github.com/washingtonserip/micro-saas-boilerplate)!

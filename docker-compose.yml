@@ -3,14 +3,14 @@ version: '3.8'
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: saas-boilerplate-db
+    container_name: micro-saas-boilerplate-db
     restart: unless-stopped
     ports:
       - '5432:5432'
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: saas_boilerplate
+      POSTGRES_DB: micro_saas_boilerplate
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -22,7 +22,7 @@ services:
   # Optional: pgAdmin for database management
   pgadmin:
     image: dpage/pgadmin4:latest
-    container_name: saas-boilerplate-pgadmin
+    container_name: micro-saas-boilerplate-pgadmin
     restart: unless-stopped
     ports:
       - '5050:80'

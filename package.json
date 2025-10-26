@@ -1,5 +1,5 @@
 {
-  "name": "saas-boilerplate",
+  "name": "micro-saas-boilerplate",
   "private": true,
   "scripts": {
     "build": "turbo run build",

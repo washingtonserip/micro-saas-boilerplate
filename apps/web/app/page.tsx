@@ -17,7 +17,7 @@ export default function Home() {
             {/* Header */}
             <div className="space-y-3">
               <h1 className="text-5xl sm:text-6xl font-bold tracking-tight">
-                SaaS Boilerplate
+                Micro SaaS Boilerplate
               </h1>
               <p className="text-lg text-muted-foreground">
                 Next.js + shadcn/ui starter
@@ -37,7 +37,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-2xl mx-auto">
               <Link
                 href="/landing-page"
-                className="group relative px-8 py-4 bg-primary text-primary-foreground rounded-xl font-medium hover:shadow-lg hover:shadow-primary/25 transition-all hover:scale-105"
+                className="group relative px-8 py-4 border-2 rounded-xl font-medium hover:border-primary hover:bg-primary/5 transition-all hover:scale-105"
               >
                 <span className="relative z-10">Landing Page</span>
               </Link>
@@ -69,7 +69,7 @@ export default function Home() {
                 </a>
               </div>
               <a
-                href="https://github.com/washingtonserip/saas-boilerplate"
+                href="https://github.com/washingtonserip/micro-saas-boilerplate"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors group"
