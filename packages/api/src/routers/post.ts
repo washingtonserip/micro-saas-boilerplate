@@ -1,11 +1,21 @@
-import { z } from 'zod';
-import { router, publicProcedure } from '../trpc';
-import { posts, eq } from '@repo/db';
+import { z } from "zod";
+import { router, publicProcedure } from "../trpc";
+import { posts, eq, gte } from "@repo/db";
 
 export const postRouter = router({
   // Get all posts
   getAll: publicProcedure.query(async ({ ctx }) => {
-    return await ctx.db.select().from(posts).orderBy(posts.createdAt);
+    // WORKAROUND: Only show posts from the last 2 minutes.
+    // This is a precautionary measure for the demo page only to prevent displaying
+    // abbreviated posts indefinitely. Do NOT use this filtering logic in production
+    // or other scenarios where you need to display all posts.
+    const twoMinutesAgo = new Date(Date.now() - 2 * 60 * 1000);
+
+    return await ctx.db
+      .select()
+      .from(posts)
+      .where(gte(posts.createdAt, twoMinutesAgo))
+      .orderBy(posts.createdAt);
   }),
 
   // Get post by ID
@@ -19,7 +29,7 @@ export const postRouter = router({
         .limit(1);
 
       if (result.length === 0) {
-        throw new Error('Post not found');
+        throw new Error("Post not found");
       }
 
       return result[0];
