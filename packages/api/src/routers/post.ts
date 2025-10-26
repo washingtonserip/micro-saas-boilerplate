@@ -1,7 +1,6 @@
 import { z } from 'zod';
-import { eq } from 'drizzle-orm';
 import { router, publicProcedure } from '../trpc';
-import { posts } from '@repo/db';
+import { posts, eq } from '@repo/db';
 
 export const postRouter = router({
   // Get all posts
