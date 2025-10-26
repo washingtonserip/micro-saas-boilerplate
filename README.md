@@ -78,9 +78,13 @@ saas-boilerplate/
    - PostgreSQL on `localhost:5432`
    - pgAdmin on `localhost:5050` (admin@admin.com / admin)
 
-5. **Push database schema**
+5. **Run database migrations**
    ```bash
-   pnpm --filter @repo/db db:push
+   # First, copy .env to apps/web/.env.local for Next.js
+   cp .env apps/web/.env.local
+
+   # Run migrations
+   DATABASE_URL=postgresql://postgres:postgres@localhost:5432/saas_boilerplate pnpm --filter @repo/db db:migrate
    ```
 
 6. **Start development server**
@@ -100,10 +104,10 @@ The app will be running at [http://localhost:3000](http://localhost:3000)
 - `pnpm check-types` - Run TypeScript type checking
 
 ### Database Scripts
-- `pnpm --filter @repo/db db:generate` - Generate migrations
-- `pnpm --filter @repo/db db:push` - Push schema to database
-- `pnpm --filter @repo/db db:studio` - Open Drizzle Studio
-- `pnpm --filter @repo/db db:migrate` - Run migrations
+- `pnpm --filter @repo/db db:generate` - Generate migrations from schema changes
+- `pnpm --filter @repo/db db:migrate` - Run pending migrations (production workflow)
+- `pnpm --filter @repo/db db:push` - Push schema directly (dev only, skip for production)
+- `pnpm --filter @repo/db db:studio` - Open Drizzle Studio GUI
 
 ### Web App Scripts
 - `pnpm --filter web dev` - Start Next.js dev server
@@ -180,10 +184,17 @@ If using Docker Compose, pgAdmin is available at `localhost:5050`:
 ### Adding a New Feature
 
 1. Create database schema in `packages/db/src/schema/`
-2. Push schema changes: `pnpm --filter @repo/db db:push`
-3. Add tRPC procedures in `packages/api/src/routers/`
-4. Create UI components in `packages/ui/src/`
-5. Build pages in `apps/web/app/`
+2. Generate migration:
+   ```bash
+   DATABASE_URL=your_db_url pnpm --filter @repo/db db:generate
+   ```
+3. Apply migration:
+   ```bash
+   DATABASE_URL=your_db_url pnpm --filter @repo/db db:migrate
+   ```
+4. Add tRPC procedures in `packages/api/src/routers/`
+5. Create UI components in `packages/ui/src/`
+6. Build pages in `apps/web/app/`
 
 ### Creating a New Component
 
@@ -199,11 +210,66 @@ import { Button } from "@repo/ui/button";
 
 ### Vercel (Recommended)
 
-1. Push your code to GitHub
-2. Import your repository in Vercel
-3. Set the root directory to `apps/web`
-4. Add environment variables
-5. Deploy
+This boilerplate is optimized for Vercel deployment with automatic database migrations.
+
+**Prerequisites:**
+- A PostgreSQL database (Vercel Postgres, Neon, Supabase, etc.)
+
+**Steps:**
+
+1. **Set up a PostgreSQL database**
+   - Option 1: [Vercel Postgres](https://vercel.com/docs/storage/vercel-postgres)
+   - Option 2: [Neon](https://neon.tech) (recommended for free tier)
+   - Option 3: [Supabase](https://supabase.com/database)
+
+2. **Push your code to GitHub**
+   ```bash
+   git push origin main
+   ```
+
+3. **Import your repository in Vercel**
+   - Go to [vercel.com](https://vercel.com)
+   - Click "Add New Project"
+   - Import your GitHub repository
+
+4. **Configure build settings**
+   - Root Directory: `apps/web`
+   - Framework Preset: Next.js
+   - Build Command: `pnpm build` (default)
+   - Install Command: `pnpm install` (default)
+
+5. **Add environment variables**
+
+   Add the following to your Vercel project settings:
+
+   ```env
+   DATABASE_URL=your_postgres_connection_string
+   ```
+
+   Example for Neon:
+   ```env
+   DATABASE_URL=postgresql://user:password@host.neon.tech/dbname?sslmode=require
+   ```
+
+6. **Deploy**
+
+   Click "Deploy" - migrations will run automatically during the build process via the `postinstall` script.
+
+**How Migrations Work on Vercel:**
+
+The `apps/web/package.json` includes a `postinstall` script that automatically runs database migrations:
+
+```json
+"postinstall": "pnpm --filter @repo/db db:migrate"
+```
+
+This ensures your database schema is always up-to-date with each deployment.
+
+**Troubleshooting:**
+
+- If migrations fail, check the build logs in Vercel
+- Ensure `DATABASE_URL` is set correctly and accessible
+- For connection issues, make sure SSL is enabled in your database connection string
 
 ### Docker
 
@@ -239,7 +305,15 @@ export const users = pgTable('users', {
 });
 ```
 
-Then run `pnpm --filter @repo/db db:push` to apply changes.
+Then generate and apply migrations:
+
+```bash
+# Generate migration file
+DATABASE_URL=your_db_url pnpm --filter @repo/db db:generate
+
+# Apply migration
+DATABASE_URL=your_db_url pnpm --filter @repo/db db:migrate
+```
 
 ## Contributing
 
