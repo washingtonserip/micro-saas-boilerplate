@@ -34,7 +34,7 @@ export default function Home() {
             </div>
 
             {/* Example Pages Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-2xl mx-auto">
               <Link
                 href="/landing-page"
                 className="group relative px-8 py-4 bg-primary text-primary-foreground rounded-xl font-medium hover:shadow-lg hover:shadow-primary/25 transition-all hover:scale-105"
@@ -46,6 +46,12 @@ export default function Home() {
                 className="group relative px-8 py-4 border-2 rounded-xl font-medium hover:border-primary hover:bg-primary/5 transition-all hover:scale-105"
               >
                 <span className="relative z-10">Dashboard</span>
+              </Link>
+              <Link
+                href="/trpc-demo"
+                className="group relative px-8 py-4 border-2 rounded-xl font-medium hover:border-primary hover:bg-primary/5 transition-all hover:scale-105"
+              >
+                <span className="relative z-10">tRPC Demo</span>
               </Link>
             </div>
 
