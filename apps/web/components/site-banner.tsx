@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Github } from "lucide-react";
+import { ThemeToggle } from "@repo/ui/components/theme-toggle";
 
 export function SiteBanner() {
   return (
@@ -31,6 +32,8 @@ export function SiteBanner() {
             <span className="hidden sm:inline">View on GitHub</span>
             <span className="sm:hidden">GitHub</span>
           </Link>
+          <span className="text-muted-foreground">•</span>
+          <ThemeToggle />
         </div>
       </div>
     </div>
