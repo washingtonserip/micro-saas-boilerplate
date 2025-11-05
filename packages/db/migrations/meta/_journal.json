@@ -8,6 +8,13 @@
       "when": 1761445239665,
       "tag": "0000_dashing_speedball",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1762215415432,
+      "tag": "0001_bitter_pretty_boy",
+      "breakpoints": true
     }
   ]
 }

@@ -32,13 +32,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@repo/ui/components/ui/sidebar";
+import { useSession } from "@/lib/auth-client";
 
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
   navMain: [
     {
       title: "Dashboard",
@@ -151,6 +147,17 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { data: session, isPending } = useSession();
+
+  // Prepare user data from session
+  const user = session?.user
+    ? {
+        name: session.user.name || "User",
+        email: session.user.email,
+        avatar: session.user.image || "",
+      }
+    : null;
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -174,7 +181,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        {isPending ? (
+          <div className="flex items-center gap-2 px-2 py-1.5">
+            <div className="h-8 w-8 animate-pulse rounded-lg bg-sidebar-accent" />
+            <div className="flex-1 space-y-1">
+              <div className="h-4 w-24 animate-pulse rounded bg-sidebar-accent" />
+              <div className="h-3 w-32 animate-pulse rounded bg-sidebar-accent" />
+            </div>
+          </div>
+        ) : user ? (
+          <NavUser user={user} />
+        ) : null}
       </SidebarFooter>
     </Sidebar>
   );

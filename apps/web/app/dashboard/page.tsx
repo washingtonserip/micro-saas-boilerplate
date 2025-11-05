@@ -4,10 +4,22 @@ import { DataTable } from "@repo/ui/components/data-table";
 import { SectionCards } from "@/components/section-cards";
 import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@repo/ui/components/ui/sidebar";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 import data from "./data.json";
 
-export default function Page() {
+export default async function Page() {
+  // Protected route: Check authentication
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  // Redirect to sign-in if not authenticated
+  if (!session) {
+    redirect("/sign-in");
+  }
   return (
     <SidebarProvider>
       <AppSidebar variant="inset" />

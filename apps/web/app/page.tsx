@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Github } from "lucide-react";
 
 export default function Home() {
   return (
@@ -20,7 +19,7 @@ export default function Home() {
                 Micro SaaS Boilerplate
               </h1>
               <p className="text-lg text-muted-foreground">
-                Next.js + shadcn/ui starter
+                Next.js + shadcn/ui + Better Auth + tRPC
               </p>
             </div>
 
@@ -28,12 +27,12 @@ export default function Home() {
             <div className="flex items-center gap-3 max-w-md mx-auto">
               <div className="flex-1 h-px bg-border" />
               <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                Example pages
+                Public pages
               </span>
               <div className="flex-1 h-px bg-border" />
             </div>
 
-            {/* Example Pages Buttons */}
+            {/* Example Public Pages Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-2xl mx-auto">
               <Link
                 href="/landing-page"
@@ -41,6 +40,31 @@ export default function Home() {
               >
                 <span className="relative z-10">Landing Page</span>
               </Link>
+              <Link
+                href="/sign-in"
+                className="group relative px-8 py-4 border-2 rounded-xl font-medium hover:border-primary hover:bg-primary/5 transition-all hover:scale-105"
+              >
+                <span>Sign In</span>
+              </Link>
+              <Link
+                href="/sign-up"
+                className="group relative px-8 py-4 border-2 rounded-xl font-medium hover:border-primary hover:bg-primary/5 transition-all hover:scale-105"
+              >
+                <span>Sign Up</span>
+              </Link>
+            </div>
+
+            {/* Divider */}
+            <div className="flex items-center gap-3 max-w-md mx-auto">
+              <div className="flex-1 h-px bg-border" />
+              <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                Authenticated pages
+              </span>
+              <div className="flex-1 h-px bg-border" />
+            </div>
+
+            {/* Example Authenticated Pages Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-2xl mx-auto">
               <Link
                 href="/dashboard"
                 className="group relative px-8 py-4 border-2 rounded-xl font-medium hover:border-primary hover:bg-primary/5 transition-all hover:scale-105"

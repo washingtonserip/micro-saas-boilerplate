@@ -1,32 +1,40 @@
 import Link from "next/link";
 import { Github } from "lucide-react";
+import { ThemeToggle } from "@repo/ui/components/theme-toggle";
 
 export function SiteBanner() {
   return (
     <div className="border-b bg-muted/40 px-4 py-2">
-      <div className="mx-auto flex max-w-7xl items-center justify-center gap-4 text-sm">
-        <div className="flex items-center gap-2">
-          <span className="text-muted-foreground">Built by</span>
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 text-sm">
+        <Link href="/" className="font-semibold hover:underline">
+          Micro SaaS Boilerplate
+        </Link>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <span className="text-muted-foreground">Built by</span>
+            <Link
+              href="https://github.com/washingtonserip"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium hover:underline"
+            >
+              @washingtonserip
+            </Link>
+          </div>
+          <span className="text-muted-foreground">•</span>
           <Link
-            href="https://github.com/washingtonserip"
+            href="https://github.com/washingtonserip/micro-saas-boilerplate"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-medium hover:underline"
+            className="flex items-center gap-2 font-medium hover:underline"
           >
-            @washingtonserip
+            <Github className="h-4 w-4" />
+            <span className="hidden sm:inline">View on GitHub</span>
+            <span className="sm:hidden">GitHub</span>
           </Link>
+          <span className="text-muted-foreground">•</span>
+          <ThemeToggle />
         </div>
-        <span className="text-muted-foreground">•</span>
-        <Link
-          href="https://github.com/washingtonserip/micro-saas-boilerplate"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 font-medium hover:underline"
-        >
-          <Github className="h-4 w-4" />
-          <span className="hidden sm:inline">View on GitHub</span>
-          <span className="sm:hidden">GitHub</span>
-        </Link>
       </div>
     </div>
   );
