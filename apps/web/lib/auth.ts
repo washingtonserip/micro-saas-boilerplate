@@ -2,6 +2,8 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "@repo/db";
 import { Resend } from "resend";
+import { stripe as stripePlugin } from "@better-auth/stripe";
+import Stripe from "stripe";
 
 // Initialize Resend only if API key is provided (allows CLI to work without it)
 const resend = process.env.RESEND_API_KEY
@@ -28,6 +30,13 @@ async function sendEmail(params: {
     ...params,
   });
 }
+
+// Initialize Stripe only if API key is provided
+const stripeClient = process.env.STRIPE_SECRET_KEY
+  ? new Stripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: "2025-08-27.basil",
+    })
+  : null;
 
 export const auth = betterAuth({
   appName: "Micro SaaS Boilerplate",
@@ -98,13 +107,69 @@ export const auth = betterAuth({
   //   },
   // },
 
-  // Future: Plugins (add as needed)
-  // plugins: [
-  //   magicLink({
-  //     sendMagicLink: async ({ email, url }) => { ... }
-  //   }),
-  //   passkey(),
-  // ],
+  // Plugins
+  plugins: [
+    ...(stripeClient && process.env.STRIPE_WEBHOOK_SECRET
+      ? [
+          stripePlugin({
+            stripeClient,
+            stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
+            createCustomerOnSignUp: true,
+            subscription: {
+              enabled: true,
+              plans: [
+                {
+                  name: "starter",
+                  priceId: process.env.STRIPE_STARTER_MONTHLY_PRICE_ID || "",
+                  freeTrial: {
+                    days: 14,
+                    onTrialStart: async (subscription) => {
+                      console.log(
+                        `Trial started for subscription: ${subscription.id}`
+                      );
+                    },
+                    onTrialEnd: async ({ subscription }, request) => {
+                      console.log(`Trial ended for subscription: ${subscription.id}`);
+                      // Note: User email not available in this callback
+                      // Would need to fetch user separately if email is needed
+                    },
+                  },
+                },
+                {
+                  name: "pro",
+                  priceId: process.env.STRIPE_PRO_MONTHLY_PRICE_ID || "",
+                  freeTrial: {
+                    days: 14,
+                  },
+                },
+              ],
+              onSubscriptionComplete: async ({
+                event,
+                subscription,
+                stripeSubscription,
+                plan,
+              }) => {
+                console.log(
+                  `Subscription completed: ${subscription.id} for plan: ${plan.name}`
+                );
+                // Optionally send welcome email
+                const userId = subscription.referenceId;
+                // You can fetch user details and send email here
+              },
+              onSubscriptionCancel: async ({
+                event,
+                subscription,
+                stripeSubscription,
+                cancellationDetails,
+              }) => {
+                console.log(`Subscription canceled: ${subscription.id}`);
+                // Optionally send cancellation email
+              },
+            },
+          }),
+        ]
+      : []),
+  ],
 });
 
 // Export types for type-safe usage

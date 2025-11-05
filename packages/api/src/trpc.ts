@@ -33,6 +33,7 @@ export const protectedProcedure = t.procedure.use((opts) => {
 export const adminProcedure = protectedProcedure.use((opts) => {
   const { ctx } = opts;
 
+  // @ts-expect-error - Better Auth session type doesn't include custom user fields yet
   if (ctx.session.user.role !== 'admin') {
     throw new TRPCError({
       code: 'FORBIDDEN',
